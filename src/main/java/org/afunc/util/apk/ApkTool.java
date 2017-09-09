@@ -1,7 +1,6 @@
 package org.afunc.util.apk;
 
 import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.content.Context;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
@@ -10,7 +9,6 @@ import android.content.pm.Signature;
 import android.graphics.drawable.Drawable;
 import org.afunc.util.Tools;
 import org.afunc.util.shell.ShellTool;
-
 
 import java.io.File;
 import java.io.IOException;
@@ -45,49 +43,9 @@ public final class ApkTool {
         return instance;
     }
 
-    /**
-     * 安装App
-     *
-     * @param context  上下文
-     * @param filePath 文件路径
-     */
-    public void installApp(Context context, String filePath) {
-        installApp(context, Tools.file().getFileByPath(filePath));
-    }
 
-    /**
-     * 安装App
-     *
-     * @param context 上下文
-     * @param file    文件
-     */
-    public void installApp(Context context, File file) {
-        if (!Tools.file().isFileExists(file)) return;
-        context.startActivity(Tools.intent().getInstallAppIntent(file));
-    }
 
-    /**
-     * 安装App
-     *
-     * @param activity    activity
-     * @param filePath    文件路径
-     * @param requestCode 请求值
-     */
-    public void installApp(Activity activity, String filePath, int requestCode) {
-        installApp(activity, Tools.file().getFileByPath(filePath), requestCode);
-    }
 
-    /**
-     * 安装App(支持6.0)
-     *
-     * @param activity    activity
-     * @param file        文件
-     * @param requestCode 请求值
-     */
-    public void installApp(Activity activity, File file, int requestCode) {
-        if (!Tools.file().isFileExists(file)) return;
-        activity.startActivityForResult(Tools.intent().getInstallAppIntent(file), requestCode);
-    }
 
     /**
      * 静默安装App
@@ -104,28 +62,6 @@ public final class ApkTool {
         return commandResult.successMsg != null && commandResult.successMsg.toLowerCase().contains("success");
     }
 
-    /**
-     * 卸载App
-     *
-     * @param context     上下文
-     * @param packageName 包名
-     */
-    public void uninstallApp(Context context, String packageName) {
-        if (Tools.string().isEmpty(packageName)) return;
-        context.startActivity(Tools.intent().getUninstallAppIntent(packageName));
-    }
-
-    /**
-     * 卸载App
-     *
-     * @param activity    activity
-     * @param packageName 包名
-     * @param requestCode 请求值
-     */
-    public void uninstallApp(Activity activity, String packageName, int requestCode) {
-        if (Tools.string().isEmpty(packageName)) return;
-        activity.startActivityForResult(Tools.intent().getUninstallAppIntent(packageName), requestCode);
-    }
 
     /**
      * 静默卸载App
@@ -185,48 +121,10 @@ public final class ApkTool {
         return packageNames.contains(packageName);
     }
 
-    /**
-     * 打开App
-     *
-     * @param context     上下文
-     * @param packageName 包名
-     */
-    public void launchApp(Context context, String packageName) {
-        if (Tools.string().isEmpty(packageName)) return;
-        context.startActivity(Tools.intent().getLaunchAppIntent(context, packageName));
-    }
 
-    /**
-     * 打开App
-     *
-     * @param activity    activity
-     * @param packageName 包名
-     * @param requestCode 请求值
-     */
-    public void launchApp(Activity activity, String packageName, int requestCode) {
-        if (Tools.string().isEmpty(packageName)) return;
-        activity.startActivityForResult(Tools.intent().getLaunchAppIntent(activity, packageName), requestCode);
-    }
 
-    /**
-     * 获取App具体设置
-     *
-     * @param context 上下文
-     */
-    public void getAppDetailsSettings(Context context) {
-        getAppDetailsSettings(context, context.getPackageName());
-    }
 
-    /**
-     * 获取App具体设置
-     *
-     * @param context     上下文
-     * @param packageName 包名
-     */
-    public void getAppDetailsSettings(Context context, String packageName) {
-        if (Tools.string().isEmpty(packageName)) return;
-        context.startActivity(Tools.intent().getAppDetailsSettingsIntent(packageName));
-    }
+
 
     /**
      * 获取App名称
@@ -468,7 +366,7 @@ public final class ApkTool {
         }
         String[] split = ret.split(channelPrefix);
         String channel = "";
-        if (split != null && split.length >= 2) {
+        if (split.length >= 2) {
             channel = ret.substring(key.length());
         }
         return channel;

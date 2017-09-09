@@ -842,8 +842,6 @@ public final class DeviceTool {
             BufferedReader br = new BufferedReader(fr);
             String text = br.readLine();
             result = text.trim();
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -863,8 +861,6 @@ public final class DeviceTool {
             for (int i = 0; i < array.length; i++) {
             }
             return array[1];
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         }

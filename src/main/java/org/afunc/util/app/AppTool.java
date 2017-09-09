@@ -9,9 +9,7 @@ import android.content.ServiceConnection;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
-import android.os.Bundle;
 import org.afunc.util.Tools;
-
 
 import java.util.HashSet;
 import java.util.List;
@@ -287,18 +285,6 @@ public final class AppTool {
         }
     }
 
-    /**
-     * 判断App是否处于前台
-     * <p>当不是查看当前App，且SDK大于21时，
-     * 需添加权限 {@code <uses-permission android:name="android.permission.PACKAGE_USAGE_STATS"/>}</p>
-     *
-     * @param context     上下文
-     * @param packageName 包名
-     * @return {@code true}: 是<br>{@code false}: 否
-     */
-    public boolean isAppForeground(Context context, String packageName) {
-        return !Tools.string().isEmpty(packageName) && packageName.equals(Tools.process().getForegroundProcessName());
-    }
 
     /**
      * 判断是否存在Activity
@@ -316,28 +302,8 @@ public final class AppTool {
                 context.getPackageManager().queryIntentActivities(intent, 0).size() == 0);
     }
 
-    /**
-     * 打开Activity
-     *
-     * @param context     上下文
-     * @param packageName 包名
-     * @param className   全类名
-     */
-    public void launchActivity(Context context, String packageName, String className) {
-        launchActivity(context, packageName, className, null);
-    }
 
-    /**
-     * 打开Activity
-     *
-     * @param context     上下文
-     * @param packageName 包名
-     * @param className   全类名
-     * @param bundle      bundle
-     */
-    public void launchActivity(Context context, String packageName, String className, Bundle bundle) {
-        context.startActivity(Tools.intent().getComponentIntent(packageName, className, bundle));
-    }
+
 
     /**
      * 获取launcher activity

@@ -3,7 +3,8 @@ package org.afunc.util;
 import android.app.Application;
 import android.content.Context;
 import org.afunc.util.apk.ApkTool;
-import org.afunc.util.app.*;
+import org.afunc.util.app.AppTool;
+import org.afunc.util.app.InputMethodTool;
 import org.afunc.util.constants.ConstantsTool;
 import org.afunc.util.convert.ConvertTool;
 import org.afunc.util.device.DeviceTool;
@@ -19,7 +20,6 @@ import org.afunc.util.secure.*;
 import org.afunc.util.shell.ShellTool;
 import org.afunc.util.string.StringTool;
 import org.afunc.util.time.TimeTool;
-
 
 import java.lang.reflect.Method;
 
@@ -48,16 +48,12 @@ public class Tools {
     private static DeviceTool mDevice;
     private static BitmapTool mBitmap;
     private static InputMethodTool mInputMethodTool;
-    private static ToastTool mToast;
-    private static SnackbarTool mSnackbar;
     private static NetworkTool mNetwork;
     private static SPTool mSP;
     private static CloseTool mClose;
     private static ConstantsTool mConstants;
     private static ConvertTool mConvert;
     private static FileTool mFile;
-    private static IntentTool mIntent;
-    private static ProcessTool mProcess;
     private static ShellTool mShell;
     private static TimeTool mTime;
 
@@ -223,19 +219,6 @@ public class Tools {
         return mInputMethodTool;
     }
 
-    public static ToastTool toast() {
-        if (mToast == null) {
-            mToast = ToastTool.instance();
-        }
-        return mToast;
-    }
-
-    public static SnackbarTool snackbar() {
-        if (mSnackbar == null) {
-            mSnackbar = SnackbarTool.instance();
-        }
-        return mSnackbar;
-    }
 
     public static NetworkTool network() {
         if (mNetwork == null) {
@@ -277,20 +260,6 @@ public class Tools {
             mFile = FileTool.instance();
         }
         return mFile;
-    }
-
-    public static IntentTool intent() {
-        if (mIntent == null) {
-            mIntent = IntentTool.instance();
-        }
-        return mIntent;
-    }
-
-    public static ProcessTool process() {
-        if (mProcess == null) {
-            mProcess = ProcessTool.instance();
-        }
-        return mProcess;
     }
 
     public static ShellTool shell() {
