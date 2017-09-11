@@ -45,19 +45,19 @@ public final class SPTool {
     }
 
     public boolean getShareBoolean(String name) {
-        SharedPreferences share = Tools.app().getSharedPreferences(SP, Context.MODE_PRIVATE);
+        SharedPreferences share = Tools.getContext().getSharedPreferences(SP, Context.MODE_PRIVATE);
         return share.getBoolean(name, false);
     }
 
     public void saveShareBoolean(String name, boolean flag) {
-        SharedPreferences share = Tools.app().getSharedPreferences(SP, Context.MODE_PRIVATE);
+        SharedPreferences share = Tools.getContext().getSharedPreferences(SP, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = share.edit();
         editor.putBoolean(name, flag);
         editor.commit();
     }
 
     public int getShareInt(String name) {
-        SharedPreferences share = Tools.app().getSharedPreferences(SP, Context.MODE_PRIVATE);
+        SharedPreferences share = Tools.getContext().getSharedPreferences(SP, Context.MODE_PRIVATE);
         return share.getInt(name, 0);
     }
 
@@ -67,36 +67,36 @@ public final class SPTool {
      * @return
      */
     public int getShareInt(String name, int value) {
-        SharedPreferences share = Tools.app().getSharedPreferences(SP, Context.MODE_PRIVATE);
+        SharedPreferences share = Tools.getContext().getSharedPreferences(SP, Context.MODE_PRIVATE);
         return share.getInt(name, value);
     }
 
     public void saveShareInt(String name, int value) {
-        SharedPreferences share = Tools.app().getSharedPreferences(SP, Context.MODE_PRIVATE);
+        SharedPreferences share = Tools.getContext().getSharedPreferences(SP, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = share.edit();
         editor.putInt(name, value);
         editor.commit();
     }
 
     public String getShareString(String name) {
-        SharedPreferences share = Tools.app().getSharedPreferences(SP, Context.MODE_PRIVATE);
+        SharedPreferences share = Tools.getContext().getSharedPreferences(SP, Context.MODE_PRIVATE);
         return share.getString(name, "");
     }
 
     public void saveShareString(String name, String value) {
-        SharedPreferences share = Tools.app().getSharedPreferences(SP, Context.MODE_PRIVATE);
+        SharedPreferences share = Tools.getContext().getSharedPreferences(SP, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = share.edit();
         editor.putString(name, value);
         editor.commit();
     }
 
     private long getShareLong(String name) {
-        SharedPreferences share = Tools.app().getSharedPreferences(SP, Context.MODE_PRIVATE);
+        SharedPreferences share = Tools.getContext().getSharedPreferences(SP, Context.MODE_PRIVATE);
         return share.getLong(name, 0L);
     }
 
     private void saveShareLong(String name, Long value) {
-        SharedPreferences share = Tools.app().getSharedPreferences(SP, Context.MODE_PRIVATE);
+        SharedPreferences share = Tools.getContext().getSharedPreferences(SP, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = share.edit();
         editor.putLong(name, value);
         editor.commit();

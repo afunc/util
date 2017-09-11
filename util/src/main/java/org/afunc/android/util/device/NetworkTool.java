@@ -155,7 +155,7 @@ public final class NetworkTool {
      * <p>3.0以下打开设置界面</p>
      */
     public void openWirelessSettings() {
-        Tools.app().startActivity(new Intent(android.provider.Settings.ACTION_WIRELESS_SETTINGS).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
+        Tools.getContext().startActivity(new Intent(android.provider.Settings.ACTION_WIRELESS_SETTINGS).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
     }
 
     /**
@@ -165,7 +165,7 @@ public final class NetworkTool {
      */
     public boolean getDataEnabled() {
         try {
-            TelephonyManager tm = (TelephonyManager) Tools.app().getSystemService(Context.TELEPHONY_SERVICE);
+            TelephonyManager tm = (TelephonyManager) Tools.getContext().getSystemService(Context.TELEPHONY_SERVICE);
             Method getMobileDataEnabledMethod = tm.getClass().getDeclaredMethod("getDataEnabled");
             if (null != getMobileDataEnabledMethod) {
                 return (boolean) getMobileDataEnabledMethod.invoke(tm);
@@ -184,7 +184,7 @@ public final class NetworkTool {
      */
     public void setDataEnabled(boolean enabled) {
         try {
-            TelephonyManager tm = (TelephonyManager) Tools.app().getSystemService(Context.TELEPHONY_SERVICE);
+            TelephonyManager tm = (TelephonyManager) Tools.getContext().getSystemService(Context.TELEPHONY_SERVICE);
             Method setMobileDataEnabledMethod = tm.getClass().getDeclaredMethod("setDataEnabled", boolean.class);
             if (null != setMobileDataEnabledMethod) {
                 setMobileDataEnabledMethod.invoke(tm, enabled);
@@ -212,7 +212,7 @@ public final class NetworkTool {
      * @return NetworkInfo
      */
     private NetworkInfo getActiveNetworkInfo() {
-        ConnectivityManager cm = (ConnectivityManager) Tools.app()
+        ConnectivityManager cm = (ConnectivityManager) Tools.getContext()
                 .getSystemService(Context.CONNECTIVITY_SERVICE);
         return cm.getActiveNetworkInfo();
     }
@@ -224,7 +224,7 @@ public final class NetworkTool {
      * @return 运营商名称
      */
     public String getNetworkOperatorName() {
-        TelephonyManager tm = (TelephonyManager) Tools.app().getSystemService(Context.TELEPHONY_SERVICE);
+        TelephonyManager tm = (TelephonyManager) Tools.getContext().getSystemService(Context.TELEPHONY_SERVICE);
         return tm != null ? tm.getNetworkOperatorName() : null;
     }
 

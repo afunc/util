@@ -1,6 +1,6 @@
 package org.afunc.android.util;
 
-import android.app.Application;
+
 import android.content.Context;
 import org.afunc.android.util.apk.ApkTool;
 import org.afunc.android.util.app.*;
@@ -20,16 +20,16 @@ import org.afunc.android.util.string.StringTool;
 import org.afunc.android.util.time.TimeTool;
 
 
-import java.lang.reflect.Method;
-
 /**
  * Created by wangdongdong on 17-1-20.
  */
 
 public class Tools {
 
+
     private static boolean mOpenLog;
-    private static Application mApp;
+    private static Context mContext;
+    //    private static Application mApp;
     private static ApkTool mApk;
     private static StringTool mString;
     private static RegexTool mRegex;
@@ -62,11 +62,11 @@ public class Tools {
         throw new UnsupportedOperationException("not support instantiate Tools");
     }
 
-    public static void init(Application app) {
-        if (mApp == null) {
-            mApp = app;
-        }
-    }
+//    public static void init(Application getContext) {
+//        if (mApp == null) {
+//            mApp = getContext;
+//        }
+//    }
 
     /**
      * if open the Tools log msg.
@@ -81,26 +81,37 @@ public class Tools {
         return mOpenLog;
     }
 
-    public static Application app() {
-        if (mApp == null) {
-            try {
-                try {
-                    // 在IDE进行布局预览时使用
-                    Class<?> renderActionClass = Class.forName("com.android.layoutlib.bridge.impl.RenderAction");
-                    Method method = renderActionClass.getDeclaredMethod("getCurrentContext");
-                    Context context = (Context) method.invoke(null);
-                    mApp = new MockApplication(context);
-                } catch (Throwable ignored) {
-                    throw new RuntimeException("please invoke x.Ext.init(app) on Application#onCreate()"
-                            + " and register your Application in manifest.");
-                }
-            } catch (Throwable ignored) {
-                throw new RuntimeException("please invoke Tools.init(app) on Application#onCreate()"
-                        + " and register your Application in manifest.");
-            }
-        }
-        return mApp;
+    public static void init(Context context) {
+        mContext = context.getApplicationContext();
+
     }
+
+
+    public static Context getContext() {
+        return mContext;
+    }
+
+
+//    public static Application getContext() {
+//        if (mApp == null) {
+//            try {
+//                try {
+//                    // 在IDE进行布局预览时使用
+//                    Class<?> renderActionClass = Class.forName("com.android.layoutlib.bridge.impl.RenderAction");
+//                    Method method = renderActionClass.getDeclaredMethod("getCurrentContext");
+//                    Context context = (Context) method.invoke(null);
+//                    mApp = new MockApplication(context);
+//                } catch (Throwable ignored) {
+//                    throw new RuntimeException("please invoke x.Ext.init(getContext) on Application#onCreate()"
+//                            + " and register your Application in manifest.");
+//                }
+//            } catch (Throwable ignored) {
+//                throw new RuntimeException("please invoke Tools.init(getContext) on Application#onCreate()"
+//                        + " and register your Application in manifest.");
+//            }
+//        }
+//        return mApp;
+//    }
 
     public static ApkTool apk() {
         if (mApk == null) {
@@ -292,9 +303,9 @@ public class Tools {
         return mTime;
     }
 
-    private static class MockApplication extends Application {
-        public MockApplication(Context baseContext) {
-            this.attachBaseContext(baseContext);
-        }
-    }
+//    private static class MockApplication extends Application {
+//        public MockApplication(Context baseContext) {
+//            this.attachBaseContext(baseContext);
+//        }
+//    }
 }

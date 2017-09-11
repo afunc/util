@@ -236,15 +236,15 @@ public final class DeviceTool {
     }
 
     public float getScreenDensity() {
-        return Tools.app().getResources().getDisplayMetrics().density;
+        return Tools.getContext().getResources().getDisplayMetrics().density;
     }
 
     public int getScreenHeight() {
-        return Tools.app().getResources().getDisplayMetrics().heightPixels;
+        return Tools.getContext().getResources().getDisplayMetrics().heightPixels;
     }
 
     public int getScreenWidth() {
-        return Tools.app().getResources().getDisplayMetrics().widthPixels;
+        return Tools.getContext().getResources().getDisplayMetrics().widthPixels;
     }
 
     /**
@@ -444,7 +444,7 @@ public final class DeviceTool {
      */
     @SuppressLint("HardwareIds")
     public String getIMEI() {
-        TelephonyManager tm = (TelephonyManager) Tools.app().getSystemService(Context.TELEPHONY_SERVICE);
+        TelephonyManager tm = (TelephonyManager) Tools.getContext().getSystemService(Context.TELEPHONY_SERVICE);
         return tm != null ? tm.getDeviceId() : null;
     }
 
@@ -456,7 +456,7 @@ public final class DeviceTool {
      */
     @SuppressLint("HardwareIds")
     public String getIMSI() {
-        TelephonyManager tm = (TelephonyManager) Tools.app().getSystemService(Context.TELEPHONY_SERVICE);
+        TelephonyManager tm = (TelephonyManager) Tools.getContext().getSystemService(Context.TELEPHONY_SERVICE);
         return tm != null ? tm.getSubscriberId() : null;
     }
 
@@ -472,7 +472,7 @@ public final class DeviceTool {
      * </ul>
      */
     public int getPhoneType() {
-        TelephonyManager tm = (TelephonyManager) Tools.app().getSystemService(Context.TELEPHONY_SERVICE);
+        TelephonyManager tm = (TelephonyManager) Tools.getContext().getSystemService(Context.TELEPHONY_SERVICE);
         return tm != null ? tm.getPhoneType() : -1;
     }
 
@@ -482,7 +482,7 @@ public final class DeviceTool {
      * @return {@code true}: 是<br>{@code false}: 否
      */
     public boolean isSimCardReady() {
-        TelephonyManager tm = (TelephonyManager) Tools.app().getSystemService(Context.TELEPHONY_SERVICE);
+        TelephonyManager tm = (TelephonyManager) Tools.getContext().getSystemService(Context.TELEPHONY_SERVICE);
         return tm != null && tm.getSimState() == TelephonyManager.SIM_STATE_READY;
     }
 
@@ -493,7 +493,7 @@ public final class DeviceTool {
      * @return sim卡运营商名称
      */
     public String getSimOperatorName() {
-        TelephonyManager tm = (TelephonyManager) Tools.app().getSystemService(Context.TELEPHONY_SERVICE);
+        TelephonyManager tm = (TelephonyManager) Tools.getContext().getSystemService(Context.TELEPHONY_SERVICE);
         return tm != null ? tm.getSimOperatorName() : null;
     }
 
@@ -504,7 +504,7 @@ public final class DeviceTool {
      * @return 移动网络运营商名称
      */
     public String getSimOperatorByMnc() {
-        TelephonyManager tm = (TelephonyManager) Tools.app().getSystemService(Context.TELEPHONY_SERVICE);
+        TelephonyManager tm = (TelephonyManager) Tools.getContext().getSystemService(Context.TELEPHONY_SERVICE);
         String operator = tm != null ? tm.getSimOperator() : null;
         if (operator == null) return null;
         switch (operator) {
@@ -542,7 +542,7 @@ public final class DeviceTool {
      * VoiceMailNumber = *86<br>
      */
     public String getPhoneStatus() {
-        TelephonyManager tm = (TelephonyManager) Tools.app()
+        TelephonyManager tm = (TelephonyManager) Tools.getContext()
                 .getSystemService(Context.TELEPHONY_SERVICE);
         String str = "";
         str += "DeviceId(IMEI) = " + tm.getDeviceId() + "\n";
@@ -571,7 +571,7 @@ public final class DeviceTool {
     public void dial(String phoneNumber) {
         Intent intent = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + phoneNumber));
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        Tools.app().startActivity(intent);
+        Tools.getContext().startActivity(intent);
     }
 
     /**
@@ -583,7 +583,7 @@ public final class DeviceTool {
     public void call(String phoneNumber) {
         Intent intent = new Intent("android.intent.action.CALL", Uri.parse("tel:" + phoneNumber));
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        Tools.app().startActivity(intent);
+        Tools.getContext().startActivity(intent);
     }
 
     /**
@@ -596,7 +596,7 @@ public final class DeviceTool {
         Uri uri = Uri.parse("smsto:" + (Tools.string().isEmpty(phoneNumber) ? "" : phoneNumber));
         Intent intent = new Intent(Intent.ACTION_SENDTO, uri);
         intent.putExtra("sms_body", Tools.string().isEmpty(content) ? "" : content);
-        Tools.app().startActivity(intent);
+        Tools.getContext().startActivity(intent);
     }
 
     /**
@@ -608,7 +608,7 @@ public final class DeviceTool {
      */
     public void sendSmsSilent(String phoneNumber, String content) {
         if (Tools.string().isEmpty(content)) return;
-        PendingIntent sentIntent = PendingIntent.getBroadcast(Tools.app(), 0, new Intent(), 0);
+        PendingIntent sentIntent = PendingIntent.getBroadcast(Tools.getContext(), 0, new Intent(), 0);
         SmsManager smsManager = SmsManager.getDefault();
         if (content.length() >= 70) {
             List<String> ms = smsManager.divideMessage(content);
@@ -631,7 +631,7 @@ public final class DeviceTool {
         SystemClock.sleep(3000);
         ArrayList<HashMap<String, String>> list = new ArrayList<HashMap<String, String>>();
         // 1.获取内容解析者
-        ContentResolver resolver = Tools.app().getContentResolver();
+        ContentResolver resolver = Tools.getContext().getContentResolver();
         // 2.获取内容提供者的地址:com.android.contacts
         // raw_contacts表的地址 :raw_contacts
         // view_data表的地址 : data
@@ -692,7 +692,7 @@ public final class DeviceTool {
     public void getAllSMS() {
         // 1.获取短信
         // 1.1获取内容解析者
-        ContentResolver resolver = Tools.app().getContentResolver();
+        ContentResolver resolver = Tools.getContext().getContentResolver();
         // 1.2获取内容提供者地址   sms,sms表的地址:null  不写
         // 1.3获取查询路径
         Uri uri = Uri.parse("content://sms");

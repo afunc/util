@@ -50,7 +50,7 @@ public final class ProcessTool {
      * @return 前台应用包名
      */
     public String getForegroundProcessName() {
-        ActivityManager manager = (ActivityManager) Tools.app().getSystemService(Context.ACTIVITY_SERVICE);
+        ActivityManager manager = (ActivityManager) Tools.getContext().getSystemService(Context.ACTIVITY_SERVICE);
         List<ActivityManager.RunningAppProcessInfo> infos = manager.getRunningAppProcesses();
         if (infos != null && infos.size() != 0) {
             for (ActivityManager.RunningAppProcessInfo info : infos) {
@@ -60,22 +60,22 @@ public final class ProcessTool {
             }
         }
         if (android.os.Build.VERSION.SDK_INT > android.os.Build.VERSION_CODES.LOLLIPOP) {
-            PackageManager packageManager = Tools.app().getPackageManager();
+            PackageManager packageManager = Tools.getContext().getPackageManager();
             Intent intent = new Intent(Settings.ACTION_USAGE_ACCESS_SETTINGS);
             List<ResolveInfo> list = packageManager.queryIntentActivities(intent, PackageManager.MATCH_DEFAULT_ONLY);
             System.out.println(list);
             if (list.size() > 0) {// 有"有权查看使用权限的应用"选项
                 try {
-                    ApplicationInfo info = packageManager.getApplicationInfo(Tools.app().getPackageName(), 0);
-                    AppOpsManager aom = (AppOpsManager) Tools.app().getSystemService(Context.APP_OPS_SERVICE);
+                    ApplicationInfo info = packageManager.getApplicationInfo(Tools.getContext().getPackageName(), 0);
+                    AppOpsManager aom = (AppOpsManager) Tools.getContext().getSystemService(Context.APP_OPS_SERVICE);
                     if (aom.checkOpNoThrow(AppOpsManager.OPSTR_GET_USAGE_STATS, info.uid, info.packageName) != AppOpsManager.MODE_ALLOWED) {
-                        Tools.app().startActivity(intent);
+                        Tools.getContext().startActivity(intent);
                     }
                     if (aom.checkOpNoThrow(AppOpsManager.OPSTR_GET_USAGE_STATS, info.uid, info.packageName) != AppOpsManager.MODE_ALLOWED) {
                         Log.d("getForegroundApp", "没有打开\"有权查看使用权限的应用\"选项");
                         return null;
                     }
-                    UsageStatsManager usageStatsManager = (UsageStatsManager) Tools.app().getSystemService(Context.USAGE_STATS_SERVICE);
+                    UsageStatsManager usageStatsManager = (UsageStatsManager) Tools.getContext().getSystemService(Context.USAGE_STATS_SERVICE);
                     long endTime = System.currentTimeMillis();
                     long beginTime = endTime - 86400000 * 7;
                     List<UsageStats> usageStatses = usageStatsManager.queryUsageStats(UsageStatsManager.INTERVAL_BEST, beginTime, endTime);
@@ -104,7 +104,7 @@ public final class ProcessTool {
      * @return 后台服务进程
      */
     public Set<String> getAllBackgroundProcesses() {
-        ActivityManager am = (ActivityManager) Tools.app().getSystemService(Context.ACTIVITY_SERVICE);
+        ActivityManager am = (ActivityManager) Tools.getContext().getSystemService(Context.ACTIVITY_SERVICE);
         List<ActivityManager.RunningAppProcessInfo> infos = am.getRunningAppProcesses();
         Set<String> set = new HashSet<>();
         for (ActivityManager.RunningAppProcessInfo info : infos) {
@@ -120,7 +120,7 @@ public final class ProcessTool {
      * @return 被暂时杀死的服务集合
      */
     public Set<String> killAllBackgroundProcesses() {
-        ActivityManager am = (ActivityManager) Tools.app().getSystemService(Context.ACTIVITY_SERVICE);
+        ActivityManager am = (ActivityManager) Tools.getContext().getSystemService(Context.ACTIVITY_SERVICE);
         List<ActivityManager.RunningAppProcessInfo> infos = am.getRunningAppProcesses();
         Set<String> set = new HashSet<>();
         for (ActivityManager.RunningAppProcessInfo info : infos) {
@@ -147,7 +147,7 @@ public final class ProcessTool {
      */
     public boolean killBackgroundProcesses(String packageName) {
         if (Tools.string().isEmpty(packageName)) return false;
-        ActivityManager am = (ActivityManager) Tools.app().getSystemService(Context.ACTIVITY_SERVICE);
+        ActivityManager am = (ActivityManager) Tools.getContext().getSystemService(Context.ACTIVITY_SERVICE);
         List<ActivityManager.RunningAppProcessInfo> infos = am.getRunningAppProcesses();
         if (infos == null || infos.size() == 0) return true;
         for (ActivityManager.RunningAppProcessInfo info : infos) {

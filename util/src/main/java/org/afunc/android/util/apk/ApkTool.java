@@ -101,7 +101,7 @@ public final class ApkTool {
         File file = Tools.file().getFileByPath(filePath);
         if (!Tools.file().isFileExists(file)) return false;
         String command = "LD_LIBRARY_PATH=/vendor/lib:/system/lib pm install " + filePath;
-        ShellTool.CommandResult commandResult = Tools.shell().execCmd(command, !isSystemApp(Tools.app()), true);
+        ShellTool.CommandResult commandResult = Tools.shell().execCmd(command, !isSystemApp(Tools.getContext()), true);
         return commandResult.successMsg != null && commandResult.successMsg.toLowerCase().contains("success");
     }
 
